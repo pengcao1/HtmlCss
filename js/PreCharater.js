@@ -34,6 +34,9 @@ function main (PreStr,preWith) {
 }
 
 function formatString(preStr) {
+    // 以空格split 字符串(研究JavaScript中split的是实现方式)
+    // 当有多个空格时如何处理？
+    // 当处理的当前字符串，或者空格的index 在with之间？
     return preStr;
 }
 
