@@ -20,7 +20,6 @@ function isValidStr(str) {
     return true;
 }
 function main (PreStr,preWith) {
-    const strTEMP="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     // 全部为字符
     // 全部为空格
     if ( isNaN(preWith)) {
