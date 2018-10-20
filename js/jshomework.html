@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<!-- 
+文本处理是非常常见但又非常重要的任务。其中操作纷繁复杂。而今天我们的目标就是制作一个小型的文本预处理器。其主要功能就是对文本进行预处理以便后续进行固定宽度的排版。为了方便说明，我们定义如下的概念：
+• 空白字符（white space）：指空格 ' '。
+• 文本字符（character）：指大写或者小写的英文字母。
+• 节（segment）：指一串（大于或者等于一个）连续的空白字符或者文本字符。
+我们的文本处理器的功能还很朴素，无法处理除 空白字符 和 文本字符 之外的字符。
+我们将会使用一个固定长度作为宽度进行排版。大于这个宽度的字符会被折行。而折行不会显示任何连字符（例如 “-”），也无需对 空白字符 进行额外处理。例如，假设我们规定最大宽度为 30，则 "The main theme of
+education in engineering school is learning to teach yourself" 将排版为：
+The main theme of education in
+engineering school is learnin
+g to teach yourself
+要求
+现在请书写一个函数，该函数的输入为两个参数：
+• 需要处理的文本
+• 排版宽度。
+
+该函数的返回值为预处理后的文本。预处理后的文本为每一节，及其所在的行号。中间以分号隔开。若一个节跨越了多行，则行号用逗号隔开，并从小到大进行排列。
+
+例如，假设输入为：The main theme of education in engineering school is learning to teach yourself，并且排版宽度指定为 30，则返回：
+The(1); (1);main(1); (1);theme(1); (1);of(1); (1);education(1); (1);in(1); (2);engineering(2); (2);school(2);
+(2);is(2); (2);learning(2,3); (3);to(3); (3);teach(3); (3);yourself(3);
+
+又例如，假设输入为："So   many whitespaces"，而排版宽度为 10，则返回：
+So(1);   (1);many(1); (1);whitespaces(2,3);
+
+异常处理
+• 如果输入文本中包含有异常的字符，则返回 "ERROR: Invalid character detected!"。
+• 输入的宽度只能为 [10, 80] 之间的整数。如果超出这个范围则返回："ERROR: Width out of range!"
+-->
+<script type="text/javascript" src="PreCharater.js"></script>
+
+<body>
+    <h1>This is js Home Work</h1>
+
+        <div style="vertical-align: baseline">
+            <p>输入字符串:</p>
+            <input id="inputStr" style="border:1px solid #FF6699" />
+            <p>输入宽度:</p>
+            <input id="inputNum" style="border:1px solid #FF6600" />
+        </div>
+        <div>
+            <button type="button" onclick="testFunction()">Click to testFunction</button>
+        </div>
+        <div>
+            <p>输出结果:</p>
+            <input id="outputResult" style="border:1px solid rgb(5, 120, 242)" />
+        </div>
+</body>
+</html>
