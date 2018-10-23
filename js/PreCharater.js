@@ -1,6 +1,6 @@
 
 function testFunction () {
-    console.log("This is the testFunction..");
+    //console.log("This is the testFunction..");
     const preStr = document.getElementById("inputStr").value;
     const preWith = document.getElementById("inputNum").value;
     const testStr = "The main theme of education in engineering school is learning to teach yourself";
@@ -31,7 +31,7 @@ function main (PreStr,preWith) {
     } else if (!isValidStr(PreStr)) {
         return "ERROR: Invalid character detected!"
     }
-    return formatString(PreStr, preWith);
+    return formatStringMap(PreStr, preWith);
 }
 
 function formatString(preStr, preWith) {
@@ -50,11 +50,12 @@ function formatString(preStr, preWith) {
         var itemChar = itemStr.split(" ");
         // console.log("itemStr = >" + itemStr + "<");
         /* The(1); (1);main(1); (1);theme(1); (1);of(1); (1);education(1); (1);in(1);
-         (2);engineering(2); (2);school(2); (2); is(2); (2);
+           (2);engineering(2); (2);school(2); (2); is(2); (2);
          learning(2, 3); (3); to(3); (3); teach(3); (3); yourself(3);
         */
        /**
-        * The(1);main(1);theme(1);of(1);education(1);in(2);engineering(2);school(2);is(2);learning(3);to(3);teach(3);yourself(3)
+        * The(1); (1);main(1); (1);theme(1); (1);of(1); (1);education(1); (1);in(1);
+        *  (1);(2); (2);engineering(2); (2);school(2); (2);is(2); (2);learnin(2); (2);g(3); (3);to(3); (3);teach(3); (3);yourself(3); (3);
         */
         var aa = itemStr.split(' ');
         var aamap = aa.map( function(word,index)  {
@@ -70,6 +71,30 @@ function formatString(preStr, preWith) {
     return cutSubStr + "(" + Math.ceil((preStr.length / preWith))+")";
 }
 
+function formatStringMap(preStr, preWith) {
+    var cutSubStr = "";
+    for (i = 0; i < Math.ceil((preStr.length / preWith)); i++) {
+        var itemStr = preStr.substring(i * preWith, (i + 1) * preWith);
+        var itemArr = itemStr.split(' ');
+        var itemMap = itemArr.map( (word,index) => {
+            // console.log(itemArr.length+"<>"+index);
+            // console.log(word);
+            // var re = new RegExp("^\s+$");
+            // console.log((word.trim().length === 0) + "<>"+word);
+            return word + getSplitFormatStringItem(i, (itemArr.length === (index + 1) || (word.trim().length === 0)));
+        })
+        console.log(">>" + itemMap.join(''));
+        cutSubStr += itemMap.join('');
+    }
+    return cutSubStr;
+}
+function getSplitFormatStringItem(index,isEnd)  {
+    return isEnd ? getSplitFormatString(index) :
+    getSplitFormatString(index) + ' ' + getSplitFormatString(index);
+}
+function getSplitFormatString(index) {
+    return '(' + (index + 1) + ');';
+}
 function isAlphabet(item) {
     return (item >= 'a' && item <= 'z') || (item >= 'A' && item <= 'Z') ;
 }
