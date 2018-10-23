@@ -3,7 +3,7 @@ function testFunction () {
     console.log("This is the testFunction..");
     const preStr = document.getElementById("inputStr").value;
     const preWith = document.getElementById("inputNum").value;
-    const testStr = "The main theme of education in engineering school is learning to teach yourself";
+    const testStr = "The main theme    of education in engineering school is learning to teach yourself";
     const testWith = 30;
     const strReturn = main(testStr, Number(testWith));
     console.log("result str = ", strReturn);
@@ -35,7 +35,7 @@ function main (PreStr,preWith) {
 }
 
 function formatString(preStr, preWith) {
-    // 以空格split 字符串(研究JavaScript中split的是实现方式)
+    // 以空格split 字符串(研究JavaScript 中 split的是实现方式)
     // 当有多个空格时如何处理？
     // 当处理的当前字符串，或者空格的index 在with之间？
     var cutSubStr = "";
@@ -49,7 +49,7 @@ function formatString(preStr, preWith) {
         // }
         var itemChar = itemStr.split(" ");
         console.log("itemStr = >" + itemStr + "<");
-        var aa = itemStr.split(" ").toString().replace(eval("/"+","+"/g"),'('+(i+1)+'); ');
+        var aa = itemStr.split(" ").toString().replace(eval("/" + "," + "/g"), '(' + (i + 1) + ');' + ' (' + (i + 1) + ');');
         console.log("aa = >" + aa + "<");
         //cutSubStr += preStr.substring(i*preWith,(i+1)*preWith);
         cutSubStr += aa;
