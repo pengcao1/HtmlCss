@@ -3,7 +3,7 @@ function testFunction () {
     console.log("This is the testFunction..");
     const preStr = document.getElementById("inputStr").value;
     const preWith = document.getElementById("inputNum").value;
-    const testStr = "The main theme    of education in engineering school is learning to teach yourself";
+    const testStr = "The main theme of education in engineering school is learning to teach yourself";
     const testWith = 30;
     const strReturn = main(testStr, Number(testWith));
     console.log("result str = ", strReturn);
@@ -48,11 +48,24 @@ function formatString(preStr, preWith) {
         //     }
         // }
         var itemChar = itemStr.split(" ");
-        console.log("itemStr = >" + itemStr + "<");
-        var aa = itemStr.split(" ").toString().replace(eval("/" + "," + "/g"), '(' + (i + 1) + ');' + ' (' + (i + 1) + ');');
+        // console.log("itemStr = >" + itemStr + "<");
+        /* The(1); (1);main(1); (1);theme(1); (1);of(1); (1);education(1); (1);in(1);
+         (2);engineering(2); (2);school(2); (2); is(2); (2);
+         learning(2, 3); (3); to(3); (3); teach(3); (3); yourself(3);
+        */
+       /**
+        * The(1);main(1);theme(1);of(1);education(1);in(2);engineering(2);school(2);is(2);learning(3);to(3);teach(3);yourself(3)
+        */
+        var aa = itemStr.split(' ');
+        var aamap = aa.map( function(word,index)  {
+            console.log("map: " + word +"<>index="+index);
+        });
         console.log("aa = >" + aa + "<");
+        var aaa = aa.toString().replace(eval("/" + "," + "/g"), '(' + (i + 1) + ');'/* + ' (' + (i + 1) + ');'*/);
+        console.log("aaa = >" + aaa + "<");
+        aaa = aaa + '(' + (i + 1) + ');';
         //cutSubStr += preStr.substring(i*preWith,(i+1)*preWith);
-        cutSubStr += aa;
+        cutSubStr += aaa;
     }
     return cutSubStr + "(" + Math.ceil((preStr.length / preWith))+")";
 }
