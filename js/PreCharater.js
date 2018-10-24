@@ -102,7 +102,7 @@ function formatStringMap(preStr, preWith) {
             console.log(">>" + newCurrentStrItem + "<<");
             cutArray[i][cutArray[i].length - 1] = newCurrentStrItem + '(' + (i+1)+'-'+(i+2)+');';
             cutArray[i + 1].shift();
-        } else if (currentStrLast.startsWith('(') {
+        } else if (currentStrLast.startsWith('(')) {
         }
     }
     console.log(">>" + cutArray.toString().replace(eval("/" + "," + "/g"),""));
@@ -128,4 +128,3 @@ function isAlphabet(item) {
 function isSpace(item) {
     return item === ' ';
 }
-
