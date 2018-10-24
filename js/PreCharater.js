@@ -3,7 +3,7 @@ function testFunction () {
     //console.log("This is the testFunction..");
     const preStr = document.getElementById("inputStr").value;
     const preWith = document.getElementById("inputNum").value;
-    const testStr = "The main theme of education in   engineering school is learning to teach yourself";
+    const testStr = "The main theme of education      in    engineering school is learning to teach yourself";
     const testWith = 30;
     const strReturn = main(testStr, Number(testWith));
     console.log("result str = ", strReturn);
@@ -84,8 +84,9 @@ function formatStringMap(preStr, preWith) {
             // var re = new RegExp("^\s+$");
             // console.log((word.trim().length === 0) + "<>"+word);
             return word + getSplitFormatStringItem(i,
-                (itemArr.length === (index + 1) || (word.trim().length === 0)),
-                isEndOfAlphabet && (itemArr.length === (index + 1)));
+                itemArr.length === index + 1 || (word.trim().length === 0),
+                isEndOfAlphabet && itemArr.length === index + 1,
+                word.trim().length === 0);
         })
         //console.log(">>" + itemMap.join(''));
         cutArray = [...cutArray,itemMap];
@@ -94,15 +95,24 @@ function formatStringMap(preStr, preWith) {
 
     console.log(cutArray);
     for (i = 0; i < cutArray.length; i++) {
+        var currentArrayItem = cutArray[i];
         var currentStrLast = cutArray[i][cutArray[i].length - 1];
-        if ( currentStrLast.endsWith(',')){
+        if ( currentStrLast.endsWith(',')) {
             var nextStrStart = cutArray[i + 1][0];
             var newCurrentStrItem = currentStrLast.substring(0,currentStrLast.indexOf("("))
                 + nextStrStart.substring(0, nextStrStart.indexOf('(')) ;
             console.log(">>" + newCurrentStrItem + "<<");
             cutArray[i][cutArray[i].length - 1] = newCurrentStrItem + '(' + (i+1)+'-'+(i+2)+');';
             cutArray[i + 1].shift();
-        } else if (currentStrLast.startsWith('(')) {
+        } else {
+            var start = 0;
+            for (j = 0; j < currentArrayItem.length; j++) {
+                if (currentArrayItem[j].trim().length === 0) {
+                    // record space start
+                    start = j;
+                    continue;
+                }
+            }
         }
     }
     console.log(">>" + cutArray.toString().replace(eval("/" + "," + "/g"),""));
@@ -111,10 +121,12 @@ function formatStringMap(preStr, preWith) {
       .replace(eval("/" + "," + "/g"), "")
       .replace(eval("/" + "-" + "/g"), ",");
 }
-function getSplitFormatStringItem(index, isEnd, isEndOfAlphabet )  {
-    if (!isEndOfAlphabet) {
+function getSplitFormatStringItem(index, isEnd, isEndOfAlphabet, isFullSpace )  {
+    if (!isEndOfAlphabet && !isFullSpace) {
         return isEnd ? getSplitFormatString(index) :
         getSplitFormatString(index) + ' ' + getSplitFormatString(index);
+    } else if ( isFullSpace ){
+        return " ";
     } else {
         return '(' + (index + 1) +',';
     }
