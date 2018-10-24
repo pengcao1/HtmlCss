@@ -21,8 +21,9 @@ g to teach yourself
 该函数的返回值为预处理后的文本。预处理后的文本为每一节，及其所在的行号。中间以分号隔开。若一个节跨越了多行，则行号用逗号隔开，并从小到大进行排列。
 
 例如，假设输入为：The main theme of education in engineering school is learning to teach yourself，并且排版宽度指定为 30，则返回：
-The(1); (1);main(1); (1);theme(1); (1);of(1); (1);education(1); (1);in(1); (2);engineering(2); (2);school(2);
-(2);is(2); (2);learning(2,3); (3);to(3); (3);teach(3); (3);yourself(3);
+The(1); (1);main(1); (1);theme(1); (1);of(1); (1);education(1); (1);in(1); (2);engineering(2); (2);school(2); (2);is(2); (2);learning(2,3); (3);to(3); (3);teach(3); (3);yourself(3);
+The(1); (1);main(1); (1);theme(1); (1);of(1); (1);education(1); (1);in(1);(2);engineering(2); (2);school(2); (2);is(2); (2);learnin(2);g(3); (3);to(3); (3);teach(3); (3);yourself(3)
+The(1); (1);main(1); (1);theme(1); (1);of(1); (1);education(1); (1);in(1);(2);engineering(2); (2);school(2); (2);is(2); (2);learnin(2,g(3); (3);to(3); (3);teach(3); (3);yourself(3);
 
 又例如，假设输入为："So   many whitespaces"，而排版宽度为 10，则返回：
 So(1);   (1);many(1); (1);whitespaces(2,3);

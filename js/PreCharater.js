@@ -74,6 +74,7 @@ function formatString(preStr, preWith) {
 function formatStringMap(preStr, preWith) {
     var cutSubStr = "";
     for (i = 0; i < Math.ceil((preStr.length / preWith)); i++) {
+        var isEndOfAlphabet =  isAlphabet(preStr.charAt((i + 1) * preWith));
         var itemStr = preStr.substring(i * preWith, (i + 1) * preWith);
         var itemArr = itemStr.split(' ');
         var itemMap = itemArr.map( (word,index) => {
@@ -81,16 +82,22 @@ function formatStringMap(preStr, preWith) {
             // console.log(word);
             // var re = new RegExp("^\s+$");
             // console.log((word.trim().length === 0) + "<>"+word);
-            return word + getSplitFormatStringItem(i, (itemArr.length === (index + 1) || (word.trim().length === 0)));
+            return word + getSplitFormatStringItem(i,
+                (itemArr.length === (index + 1) || (word.trim().length === 0)),
+                isEndOfAlphabet && (itemArr.length === (index + 1)));
         })
         console.log(">>" + itemMap.join(''));
         cutSubStr += itemMap.join('');
     }
     return cutSubStr;
 }
-function getSplitFormatStringItem(index,isEnd)  {
-    return isEnd ? getSplitFormatString(index) :
-    getSplitFormatString(index) + ' ' + getSplitFormatString(index);
+function getSplitFormatStringItem(index, isEnd, isEndOfAlphabet )  {
+    if (!isEndOfAlphabet) {
+        return isEnd ? getSplitFormatString(index) :
+        getSplitFormatString(index) + ' ' + getSplitFormatString(index);
+    } else {
+        return '(' + (index + 1) +',';
+    }
 }
 function getSplitFormatString(index) {
     return '(' + (index + 1) + ');';
