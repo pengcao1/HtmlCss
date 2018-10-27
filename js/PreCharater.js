@@ -3,7 +3,7 @@ function testFunction () {
     //console.log("This is the testFunction..");
     const preStr = document.getElementById("inputStr").value;
     const preWith = document.getElementById("inputNum").value;
-    const testStr = "The main theme of education      in    engineering school is learning to teach yourself";
+    const testStr = "The main theme of education in    engineering school is learning to teach yourself";
     const testWith = 30;
     const strReturn = main(testStr, Number(testWith));
     console.log("result str = ", strReturn);
@@ -79,18 +79,12 @@ function formatStringMap(preStr, preWith) {
         var itemStr = preStr.substring(i * preWith, (i + 1) * preWith);
         var itemArr = itemStr.split(' ');
         var itemMap = itemArr.map( (word,index) => {
-            // console.log(itemArr.length+"<>"+index);
-            // console.log(word);
-            // var re = new RegExp("^\s+$");
-            // console.log((word.trim().length === 0) + "<>"+word);
             return word + getSplitFormatStringItem(i,
                 itemArr.length === index + 1 || (word.trim().length === 0),
                 isEndOfAlphabet && itemArr.length === index + 1,
                 word.trim().length === 0);
         })
-        //console.log(">>" + itemMap.join(''));
         cutArray = [...cutArray,itemMap];
-        //cutSubStr += itemMap.join('');
     }
 
     console.log(cutArray);
