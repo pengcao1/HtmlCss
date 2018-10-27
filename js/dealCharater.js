@@ -1,72 +1,77 @@
 const main = () => {
     console.log("==");
-    const strr = "The     main theme of education in engineering    \
+    var g_OutPut = [];
+    const str_test = "The     main theme of education in engineering    \
 school is learning to teach yourself who is your";
-    var buff_str ="";
-    var storage = [];
-    for (let i = 0; i < strr.length; i++) {
-        const element = strr[i];
-        //if (flag) buff_str = "";
-        if ( i === 0) {
-            buff_str += element;
-            var flag = (element === " ");
-            console.log("-0-", i, "*", flag);
-        } else {
-            if ( (element === " ") === flag ) {
-                buff_str += element;
-                console.log("-1-", i, buff_str, flag);
-            } else {
-                // storage = [...storage, buff_str];
-                storage.push(buff_str);
-                buff_str = element;
-                flag = (element === " ");
-                console.log("-2-", i, strr[i], flag)
-                //console.log("-3-", buff_str, storage);
-            }
-        }
+    const str_WIDTH = 20;
+
+
+    splitStringToItem(g_OutPut,str_test);
+
+    console.log(formatOutput(g_OutPut, str_WIDTH));
+
+}
+
+formatOutput = (g_OutPut, str_WIDTH) => {
+  var bufferCurrentLine = 0;
+  var bufferInLine = 1;
+  for (let i = 0; i < g_OutPut.length; i++) {
+    bufferCurrentLine += g_OutPut[i].str.length;
+    if (bufferCurrentLine < str_WIDTH) {
+      g_OutPut[i].split.push(bufferInLine);
+    } else if (bufferCurrentLine === str_WIDTH) {
+      bufferCurrentLine = 0;
+      g_OutPut[i].split.push(bufferInLine);
+      bufferInLine += 1;
+    } else {
+      var numberOfMultiLine = Math.trunc(bufferCurrentLine / str_WIDTH);
+      var nextLineOffset = bufferCurrentLine % str_WIDTH;
+      for (let j = 0; j <= numberOfMultiLine; j++) {
+        g_OutPut[i].split.push(bufferInLine + j);
+      }
+        bufferCurrentLine = nextLineOffset;
+        bufferInLine += numberOfMultiLine;
     }
-    // storage = [...storage, buff_str];
-    storage.push(buff_str)
-    console.log(">>>", storage);
+  }
 
-    storage_new =[];
-    for (let i=0; i< storage.length;i++) {
-        storage_new[i] = [];
-    }
-    console.log(storage_new);
+  // console.log(g_OutPut);
+  var g_str = "";
+  for (let i = 0; i < g_OutPut.length; i++) {
+    g_str += g_OutPut[i].outPut();
+  }
+  return g_str;
+};
 
-    var buff_count = 0;
-    const line_length = 20;
-    var cnt = 1;
-    storage.map((words, index) => {
-        buff_count +=words.length;
-        if (buff_count < line_length) {
-            storage_new[index].push(cnt);
-        } else if(buff_count === line_length) {
-            buff_count = 0;
-            storage_new[index].push(cnt);
-            cnt+=1;
+splitStringToItem = (g_OutPut,str_test) => {
+    var str_item = "";
+    for (let i = 0; i < str_test.length; i++) {
+      const element = str_test[i];
+      if (i === 0) {
+        str_item += element;
+        var isStartOrEndWithSpace = element === " ";
+      } else {
+        if ((element === " ") === isStartOrEndWithSpace) {
+          str_item += element;
         } else {
-            var x = Math.trunc(buff_count/line_length);
-            var y = buff_count % line_length;
-            for(let i=0 ; i< (x+1) ; i++){
-                storage_new[index].push(cnt + i);
-            }
-            buff_count = y;
-            cnt += x;
+          g_OutPut.push(new FormatString(g_OutPut.length, str_item, []));
+          str_item = element;
+          isStartOrEndWithSpace = element === " ";
         }
-        //console.log(words +"<>"+index);
-    })
+      }
+    }
+    g_OutPut.push(new FormatString(g_OutPut.length, str_item, []));
+}
 
-
-    var out_str = "";
-    // 输出
-    storage.map((words, index) => {
-        out_str += words + "(";
-        for(let i=0; i< (storage_new[index].length-1); i++){
-            out_str += storage_new[index][i]+",";
-        }
-        out_str += storage_new[index][storage_new[index].length - 1] + ");"
-    });
-    console.log(out_str);
+class FormatString {
+    constructor(index, str, split) {
+        this.index = index;
+        this.str = str;
+        this.split = split;
+    }
+    outPut() {
+        return this.str + "(" + this.split + ");";
+    }
+    get toString() {
+        return this.outPut();
+    }
 }
