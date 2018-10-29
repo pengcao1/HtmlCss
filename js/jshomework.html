@@ -73,7 +73,17 @@ So(1);   (1);many(1); (1);whitespaces(2,3);
 
         <div style="vertical-align: baseline">
             <p>输入字符串:</p>
-            <textarea id="inputStr" style="border:1px solid #FF6699"></textarea>
+            <textarea style="max-width:100%;min-width:50%" id="inputStr" style="border:1px solid #FF6699"></textarea>
+            <p></p>
+            <details id="inputDetailDel" style="display:inline-block">
+                <summary >输入要删除的行：</summary>
+                <input id="inputNumDel" style="border:1px solid #FF6600" />
+            </details>
+            <p></p>
+            <details id="inputDetailOut" style="display:inline-block">
+                <summary>书输入要指定输出的行：</summary>
+                <input id="inputNumOut" style="border:1px solid #FF6600" />
+            </details>
             <p>输入宽度:</p>
             <input id="inputNum" style="border:1px solid #FF6600" />
         </div>
@@ -82,8 +92,7 @@ So(1);   (1);many(1); (1);whitespaces(2,3);
         </div>
         <div>
             <p>输出结果:</p>
-            <!-- <input id="outputResult" style="border:1px solid rgb(5, 120, 242)" /> -->
-            <textarea id="outputResult" style="border:1px solid rgb(5, 120, 242)"></textarea>
+            <textarea id="outputResult" style="border:1px solid rgb(5, 120, 242);width:50%"></textarea>
         </div>
 </body>
 </html>

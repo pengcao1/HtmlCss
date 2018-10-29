@@ -7,17 +7,55 @@ const main = () => {
     // const str_test = document.getElementById("inputStr").value;
     // const str_WIDTH = document.getElementById("inputNum").value;
 
-    if (!(result = isValidInput(str_test, str_WIDTH)).result){
-        console.log(result.msg);
-        document.getElementById("outputResult").value = result.msg;
-        return;
+
+    const inputDetailDel = document.getElementById("inputDetailDel").open;
+    const inputDetailOut = document.getElementById("inputDetailOut").open;
+
+    console.log("inputDetailDel=" + inputDetailDel + ":inputDetailOut=" + inputDetailOut);
+    if (!(result = isValidInput(str_test, str_WIDTH)).result) {
+      console.log(result.msg);
+      document.getElementById("outputResult").value = result.msg;
+      return;
+    }
+    splitStringToItem(g_OutPut, str_test);
+    formatOutput(g_OutPut, str_WIDTH);
+
+    if (inputDetailDel) {
+      g_OutStr = formatOutDelLine(g_OutPut, parseInt(document.getElementById("inputNumDel").value));
+    } else if (inputDetailOut) {
+      g_OutStr = formatOutSpecificLine(g_OutPut, parseInt(document.getElementById("inputNumOut").value));
+    } else {
+      g_OutStr = formatOutputAll(g_OutPut);
     }
 
-    splitStringToItem(g_OutPut,str_test);
-    g_OutStr = formatOutput(g_OutPut, str_WIDTH);
     console.log(g_OutStr);
     document.getElementById("outputResult").value = g_OutStr;
 }
+
+formatOutSpecificLine = (g_OutPut, lineNumber) => {
+  var out="";
+  console.log("formatOutSpecificLine, lineNumber = ", lineNumber);
+  g_OutPut.map( (item,index) => {
+    out += (item.index === lineNumber) ? item.str : "";
+  })
+  return out;
+};
+
+formatOutDelLine = (g_OutPut, delLineNumber) => {
+
+};
+
+formatOutputAll = g_OutPut => {
+  // console.log(g_OutPut);
+  var g_str = "";
+  for (let i = 0; i < g_OutPut.length; i++) {
+    g_str += g_OutPut[i].outPut();
+  }
+  return g_str;
+};
+
+
+
 
 isValidInput = (STR, WIDTH) => {
   if (STR === undefined || STR === null || STR === "") return {result:false,msg:"Empty String"};
@@ -39,27 +77,23 @@ formatOutput = (g_OutPut, str_WIDTH) => {
     bufferCurrentLine += g_OutPut[i].str.length;
     if (bufferCurrentLine < str_WIDTH) {
       g_OutPut[i].split.push(bufferInLine);
+      g_OutPut[i].index = bufferInLine; // the first line index
     } else if (bufferCurrentLine === str_WIDTH) {
       bufferCurrentLine = 0;
       g_OutPut[i].split.push(bufferInLine);
+      g_OutPut[i].index = bufferInLine; // the first line index
       bufferInLine += 1;
     } else {
       var numberOfMultiLine = Math.trunc(bufferCurrentLine / str_WIDTH);
       var nextLineOffset = bufferCurrentLine % str_WIDTH;
+      g_OutPut[i].index = bufferInLine; // the first line index
       for (let j = 0; j <= numberOfMultiLine; j++) {
         g_OutPut[i].split.push(bufferInLine + j);
       }
-        bufferCurrentLine = nextLineOffset;
-        bufferInLine += numberOfMultiLine;
+      bufferCurrentLine = nextLineOffset;
+      bufferInLine += numberOfMultiLine;
     }
   }
-
-  // console.log(g_OutPut);
-  var g_str = "";
-  for (let i = 0; i < g_OutPut.length; i++) {
-    g_str += g_OutPut[i].outPut();
-  }
-  return g_str;
 };
 
 splitStringToItem = (g_OutPut,str_test) => {
