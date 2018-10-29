@@ -1,10 +1,11 @@
 const main = () => {
     var g_OutPut = [];
     var g_OutStr = "";
-    //const str_test = "The main theme of education in engineering school is learning to teach yourself";
-    //const str_WIDTH = 30;
-    const str_test = document.getElementById("inputStr").value;
-    const str_WIDTH = document.getElementById("inputNum").value;
+    const str_test = "The main theme of education in engineering school is learning to teach yourself";
+    //const str_test = "So   many whitespaces";
+    const str_WIDTH = 30;
+    // const str_test = document.getElementById("inputStr").value;
+    // const str_WIDTH = document.getElementById("inputNum").value;
 
     if (!(result = isValidInput(str_test, str_WIDTH)).result){
         console.log(result.msg);
@@ -20,7 +21,7 @@ const main = () => {
 
 isValidInput = (STR, WIDTH) => {
   if (STR === undefined || STR === null || STR === "") return {result:false,msg:"Empty String"};
-  var pattern = /[^a-zA-Z|\s]/;
+  const pattern = /[^a-zA-Z|\s]/;
   if (isNaN(WIDTH)) {
       return { result: false, msg: "ERROR: not a Number, please input number between [10,80]" };
   } else if (!(WIDTH < 81 && WIDTH >= 10)) {
@@ -63,18 +64,19 @@ formatOutput = (g_OutPut, str_WIDTH) => {
 
 splitStringToItem = (g_OutPut,str_test) => {
     var str_item = "";
+    const pattern = /\s/;
     for (let i = 0; i < str_test.length; i++) {
       const element = str_test[i];
       if (i === 0) {
         str_item += element;
-        var isStartOrEndWithSpace = element === " ";
+        var isStartOrEndWithSpace = (pattern.test(element));
       } else {
-        if ((element === " ") === isStartOrEndWithSpace) {
+        if (pattern.test(element) === isStartOrEndWithSpace) {
           str_item += element;
         } else {
           g_OutPut.push(new FormatString(g_OutPut.length, str_item, []));
           str_item = element;
-          isStartOrEndWithSpace = element === " ";
+          isStartOrEndWithSpace = pattern.test(element);
         }
       }
     }

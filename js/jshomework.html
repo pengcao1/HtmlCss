@@ -22,12 +22,49 @@ g to teach yourself
 
 例如，假设输入为：The main theme of education in engineering school is learning to teach yourself，并且排版宽度指定为 30，则返回：
 The(1); (1);main(1); (1);theme(1); (1);of(1); (1);education(1); (1);in(1); (2);engineering(2); (2);school(2); (2);is(2); (2);learning(2,3); (3);to(3); (3);teach(3); (3);yourself(3);
+The(1); (1);main(1); (1);theme(1); (1);of(1); (1);education(1); (1);in(1); (2);engineering(2); (2);school(2); (2);is(2); (2);learning(2,3); (3);to(3); (3);teach(3); (3);yourself(3);
 又例如，假设输入为："So   many whitespaces"，而排版宽度为 10，则返回：
+So(1);   (1);many(1); (1);whitespaces(2,3);
 So(1);   (1);many(1); (1);whitespaces(2,3);
 
 异常处理
 • 如果输入文本中包含有异常的字符，则返回 "ERROR: Invalid character detected!"。
 • 输入的宽度只能为 [10, 80] 之间的整数。如果超出这个范围则返回："ERROR: Width out of range!"
+-->
+
+<!--
+    题目一
+    
+    现在我们要加入一个新的功能。即输入个字符串后按照原排版规则输出指定行的所有节。如果一节跨越了多行，则必须输出完整的节。该功能接收三个参数：
+    
+    需要处理的文本
+    排版的宽度
+    需要输出的行号（行号从 1 开始）
+    
+    例如，对于以下的字符串（不包含双引号）
+    
+    "The main theme of education in engineering school is learning to teach yourself"
+    在排版宽度为 30，需要输出的行号为 2 时，输出为（注意行首的空格）：
+    engineering school is learning
+    
+    异常处理
+    如果输入文本中包含有异常的字符，则返回 "ERROR: Invalid character detected!"。
+    输入的宽度只能为 [10, 80] 之间的整数。如果超出这个范围则返回："ERROR: Width out of range!"
+    如果指定行不存在，则返回："ERROR: Line number out of range"
+    
+    题目二
+    现在我们要加入一个新的功能，就是在处理输入字符串的同时还能够删除指定的行。该功能接收三个参数：
+    需要处理的文本
+    排版的宽度
+    删除行的行号（行号从 1 开始）
+    需要注意的是，一个节必须整体删除。即如果一个节有一部分在将被删除的行中，则整个节都应当被删除。
+    例如，对于 "The main theme of education in engineering school is learning to teach yourself"，在排版宽度为 30 的情况下删除第 2 行，则输出为：
+    The(1); (1);main(1); (1);theme(1); (1);of(1); (1);education(1); (1);in(1); (2);to(2); (2);teach(2); (2);yourself(2);
+    异常处理
+    如果输入文本中包含有异常的字符，则返回 "ERROR: Invalid character detected!"。
+    输入的宽度只能为 [10, 80] 之间的整数。如果超出这个范围则返回："ERROR: Width out of range!"
+    如果指定行不存在，则返回："ERROR: Line number out of range"
+
 -->
 <script type="text/javascript" src="dealCharater.js"></script>
 
